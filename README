@@ -1,0 +1,15 @@
+Sixwar is a simple strategy game where you move your units around a board trying to eliminate the other player.
+
+RULES
+To move a unit, click any hex with one of your armies in it, and click a destination hex.
+You must leave at least one unit in an occupied hex, so hexes with only one unit are not eligible for movement.
+When you are finished moving, press the End Turn button to allow your opponent to move.
+
+COMBAT
+If the destination hex is occupied, the faction with the highest number of participating units wins control of the hex.
+
+REINFORCEMENTS
+At the end of each turn, each occupied hex generates an additional army.
+
+WINNING
+A player wins the round if the opposing player no longer has any units to move.
