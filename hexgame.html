@@ -14,7 +14,12 @@
 	<script src="js/jquery-1.6.2.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/jquery-ui-1.8.15.custom.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/modernizr-2.0.6.js" type="text/javascript" charset="utf-8"></script>
+	
+	<!-- Working Script - disabled for now
 	<script src="js/maindev.js" type="text/javascript" charset="utf-8"></script>
+	-->
+	
+	<script src="js/maindev_testing.js" type="text/javascript" charset="utf-8"></script>
 
 	<link rel="stylesheet" href="css/hex.css" type="text/css" media="screen" title="no title" charset="utf-8">
 	<link rel="stylesheet" href="css/dark-hive/jquery-ui-1.8.15.custom.css" type="text/css" media="screen" title="no title" charset="utf-8">
@@ -45,21 +50,27 @@
 	<canvas id="canvas" width="500" height="500" style="z-index: 2; position:absolute; left:205px; top:60px;">
 	Sixwar uses the HTML Canvas element, which is not available in some older browsers. Please upgrade your browser to try it out.
 	</canvas>
+
+    <canvas id="highlights" width="500" height="500"  style="z-index: 3; position:absolute; left:205px; top:60px;"> 
+	</canvas>
 	
+    <canvas id="fogPlayer1" width="500" height="500"  style="z-index: 4; position:absolute; left:205px; top:60px;"> 
+	</canvas>
+	
+    <canvas id="fogPlayer2" width="500" height="500"  style="z-index: 5; position:absolute; left:205px; top:60px;"> 
+	</canvas>		
+		
 	<canvas id="armies" width="500" height="500"  style="z-index: 10; position:absolute; left:205px; top:60px;">
     </canvas>
 
-    <canvas id="highlights" width="500" height="500"  style="z-index: 4; position:absolute; left:205px; top:60px;"> 
+    <canvas id="infolayer" width="500" height="500"  style="z-index: 15; position:absolute; left:205px; top:60px;"> 
 	</canvas>
 
-    <canvas id="infolayer" width="500" height="500"  style="z-index: 5; position:absolute; left:205px; top:60px;"> 
-	</canvas>
-
-    <canvas id="textlayer" width="500" height="500"  style="z-index: 6; position:absolute; left:205px; top:60px;"> 
+    <canvas id="textlayer" width="500" height="500"  style="z-index: 16; position:absolute; left:205px; top:60px;"> 
 	</canvas>
 	
 	<canvas id="clickcanvas" width="500" height="500"  style="z-index: 25; position:absolute; left:205px; top:60px;"> 
-	<!-- This canvas must be the topmost canvas since it will be used for click detection -->
+	<!-- This canvas must be the topmost canvas since it is used for click detection -->
 	</canvas>
 
 	<div id="pageCredits">sixwar is javascript game project by keaver and neil.&nbsp;&nbsp;&nbsp;all rights reserved 2011</div>
