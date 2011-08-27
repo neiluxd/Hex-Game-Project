@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+<title>sixwar | a game of hex combat</title>
+
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="Neil Estacio">
+	<!-- Date: 2011-08-09 -->
+	
+	<script src="js/jquery-1.6.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-ui-1.8.15.custom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/modernizr-2.0.6.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/maindev.js" type="text/javascript" charset="utf-8"></script>
+
+	<link rel="stylesheet" href="css/hex.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<link rel="stylesheet" href="css/dark-hive/jquery-ui-1.8.15.custom.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	
+</head>
+
+<body>
+
+<div id="mapWindow">
+
+	<div id="logo"></div>
+
+	<div id="infoBar"></div>
+	<div id="infoContent"></div>
+
+	<!-- Hex Info - insert separate stat canvas here-->
+	<canvas id="statCanvas"></canvas>   
+	<div id="statBar"></div>
+
+	<!-- Placeholder for Status Pop-up -->
+	<div id="alertArea"></div>
+
+	<!-- Main Canvases for Game Area-->
+	
+	<canvas id="testCanvasEdges" width="500" height="500" style="z-index: 1; position:absolute; left:205px; top:60px; background-color: #ccc; opacity: 0">s
+	</canvas>
+	
+	<canvas id="canvas" width="500" height="500" style="z-index: 2; position:absolute; left:205px; top:60px;">
+	Sixwar uses the HTML Canvas element, which is not available in some older browsers. Please upgrade your browser to try it out.
+	</canvas>
+	
+	<canvas id="armies" width="500" height="500"  style="z-index: 10; position:absolute; left:205px; top:60px;">
+    </canvas>
+
+    <canvas id="highlights" width="500" height="500"  style="z-index: 4; position:absolute; left:205px; top:60px;"> 
+	</canvas>
+
+    <canvas id="infolayer" width="500" height="500"  style="z-index: 5; position:absolute; left:205px; top:60px;"> 
+	</canvas>
+
+    <canvas id="textlayer" width="500" height="500"  style="z-index: 6; position:absolute; left:205px; top:60px;"> 
+	</canvas>
+	
+	<canvas id="clickcanvas" width="500" height="500"  style="z-index: 25; position:absolute; left:205px; top:60px;"> 
+	<!-- This canvas must be the topmost canvas since it will be used for click detection -->
+	</canvas>
+
+	<div id="pageCredits">sixwar is javascript game project by keaver and neil.&nbsp;&nbsp;&nbsp;all rights reserved 2011</div>
+</div>
+
+</body>
+</html>
