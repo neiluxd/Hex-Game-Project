@@ -40,7 +40,7 @@ function mainLoop () {
 	// END TURN BUTTON
 	
 	$('#infoContent').append (
-		"<button id='endTurnButton' style='position:absolute; left: 45px; top: 80px;'>End Turn</button>"
+		"<button id='endTurnButton' style='position:absolute; left: 50px; top: 80px;'>End Turn</button>"
 	);
 	
 	$('#endTurnButton').button();
