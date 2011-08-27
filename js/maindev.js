@@ -23,7 +23,7 @@ function mainLoop () {
 		tempY = e.pageY;
 		
 		// apply mouse pointer offset from actual canvas position
-		tempX = tempX - 110;
+		tempX = tempX - 100;
 	  	tempY = tempY - 50;
 	
 		highlightHexs(tempX,tempY);
