@@ -81,6 +81,14 @@ body {
 	background-repeat: no-repeat;
 }
 
+#fogCanvas1 {
+	font: 45px "Lucida Grande", Lucida, Verdana, sans-serif;
+}
+
+#fogCanvas2 {
+	font: 45px "Lucida Grande", Lucida, Verdana, sans-serif;
+}
+
 #pageCredits{
 	margin: 0 auto;
 	position: absolute;
