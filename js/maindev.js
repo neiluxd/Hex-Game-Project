@@ -22,7 +22,7 @@ function mainLoop () {
 		tempX = e.pageX;
 		tempY = e.pageY;
 		
-		// apply mouse pointer offset from actual canvas position
+		// apply mouse pointer to offset from actual canvas position
 		tempX = tempX - 155;
 	  	tempY = tempY - 80;
 	
@@ -239,6 +239,9 @@ function nextTurn () {
 
 function drawArmy()
 	{
+		
+		// Update 'Player Turn' message
+		//$("#infoBar").append ("Test");
 	var canvasArmies = $("#armies")[0];
 	var contextArmies = canvasArmies.getContext("2d");
 	
