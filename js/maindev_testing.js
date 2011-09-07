@@ -15,8 +15,7 @@ $(document).ready(function() {
 
 function mainLoop () {
 	
-	
-	// MOUSE MOVES
+	// LISTEN: MOUSE MOVE
 	
 	$("#clickcanvas").mousemove(function(e){
 		tempX = e.pageX;
@@ -29,25 +28,23 @@ function mainLoop () {
 		highlightHexs(tempX,tempY);
 	});
 	
-
-	// MOUSE CLICKS
+	// LISTEN: MOUSE CLICK
 	
 	$("#clickcanvas").click(function(){
 		attemptMove ();
 	});
-	
-	
+		
 	// END TURN BUTTON
 	
 	$('#infoContent').append (
-		"<button id='endTurnButton' style='position:absolute; left: 50px; top: 80px;'>End Turn</button>"
+		"<button id='endTurnButton' style='position:absolute; left: 53px; top: 90px;'>End Turn</button>"
 	);
 	
 	$('#endTurnButton').button();
 	$('#endTurnButton').click(function()
 		{
+		hideMsgSide();
 		nextTurn();
-		fogOfWar();
 		}
 	);
 
@@ -55,20 +52,18 @@ function mainLoop () {
 
 // ------------------------------------ 
 
-
-function checkCanvas ()
-	{
+function checkCanvas () {
 	var yesCanvas = Modernizr.canvas;
 	if (yesCanvas != true) {
 		alert ("Your browser is not HTML5-compatible");
 		}else{
 		// canvas features are present so start up the app
 		greeting ();
+		initFog();
 		}
-	}
+}
 
-function greeting () 
-	{
+function greeting () {
 	$('#alertArea').append (
 			'<img src="img/greetings.png" width="575" height="95"/><br /><br /><b>Sixwar is a simple strategy game</b> where you move your units around a board trying to eliminate the other player.<br /><br />RULES<br /><ul><li>To move a unit, click any hex with one of your armies in it, and click a destination hex.<li>You must leave at least one unit in an occupied hex, so hexes with only one unit are not eligible for movement.<li>When you are finished moving, press the End Turn button to allow your opponent to move.</ul>COMBAT<br />If the destination hex is occupied, the faction with the highest number of participating units wins control of the hex.<br /><br />REINFORCEMENTS<br/>At the end of each turn, each occupied hex generates an additional army.<br /><br />WINNING<br />A player wins the round if the opposing player no longer has any units to move.'
 	);
@@ -76,7 +71,7 @@ function greeting ()
 	$('#alertArea').dialog ({
 		title: "Welcome to Sixwar",
 		draggable: false,
-		position: [140, 75],
+		position: [140, 55],
 		minHeight: 100,
 		minWidth: 600,
 		dialogClass: "noDialogClose",
@@ -87,27 +82,21 @@ function greeting ()
 			$(this).dialog("close");
 			gameBoardSetup ();
 			
-			// Show initial player's turn message
-			$('#infoBar').html('Player Turn:&nbsp<font style="color:silver; background:#6B0002">&nbspRED&nbsp</font>');
-			
-			$('#fogCanvas1').html
-				(
-				'<font style ="display: none,">PLAYER 1 FOG</font>'
-				);
-			
+			// send first player turn msg to sidebar
+			showMsgSide ("<img src='img/gemRed.png' style='float:left; margin: 0 10px 0 0;'/><b>Player 1 Turn</b>");
 			}},
 	});
-	}
+}
 
 // Collision Function
 
-function inHex(checkX, checkY, cx, cy, r)
-		{ // check collision
-            var overlapX = checkX - cx;
-            var overlapY = checkY - cy;
-            var overlapR = r + 25; // make the pointer location a bit 'fatter' to help detection
-            return ((overlapX*overlapX+overlapY*overlapY <= overlapR*overlapR) && (hexData[moveHex][0] != null));
-        }
+function inHex(checkX, checkY, cx, cy, r) {
+	// check collision
+    var overlapX = checkX - cx;
+    var overlapY = checkY - cy;
+    var overlapR = r + 25; // make the pointer location a bit 'fatter' to help detection
+    return ((overlapX*overlapX+overlapY*overlapY <= overlapR*overlapR) && (hexData[moveHex][0] != null));
+}
 
 
 // ...........
@@ -161,7 +150,6 @@ hexData = [
    	,	[null, canvX+235, canvY+143, 3,0,[14,15,17],415,390] // 		hex 19
    	];
 
-	
 // Terrain data for each hex type (note, some are duplicates due to hex frequency)
 // format = [name, movement cost, def bonus, atk bonus]
 
@@ -207,27 +195,7 @@ fogGenData = [
    	,	[canvX+235, canvY+143, [14,15,17] ] // 		hex 19
    	];
 
-// Init fog of war arrays with all hexes as hidden
-
-function initFog ()
-	{
-	fogPlayer1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-	fogPlayer2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-	
-	$('#fogCanvas1').html
-		(
-		'<font style ="display: none,">PLAYER 1 FOG</font>'
-		);
-		
-	$('#fogCanvas2').html
-		(
-		'<font style ="display: none,">PLAYER 2 FOG</font>'
-		);
-	}
-
-
-function gameBoardSetup ()
-	{
+function gameBoardSetup () {
 	// ------- 1. create map
 	
 	var canvasMap = $("#canvas")[0];
@@ -246,14 +214,13 @@ function gameBoardSetup ()
 	
 	// ------- 3. jump to the main game loop
 	mainLoop ();
-	}
+}
 	
-function buildMap (contextMap, newHexPart)
-	{
+function buildMap (contextMap, newHexPart) {
 	// Run loop once for each hex
 
-	for (putHex=0; putHex<=totHex-1; putHex++)
-	{
+	for (putHex=0; putHex<=totHex-1; putHex++) {
+		
 	// Choose a hex type
 
 		hexType = (Math.floor(Math.random()*10)*80); // 5 hex types * freqency
@@ -269,25 +236,136 @@ function buildMap (contextMap, newHexPart)
 	
 		hexData [putHex][0] = hexType;	
 	}
-	}
+}
 
-function nextTurn ()
-	{	
+// Init fog of war arrays with all hexes as hidden
+
+function initFog () {
+	fogPlayer1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 160];
+	fogPlayer2 = [160, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+	
+	// set the fog layers to hidden (only show on specific player turn)
+	$('#fogCanvas1').show(); // red player starts game
+	$('#fogCanvas2').hide();
+	
+	// draw the starting fog states
+	
+		// P1 Fog
+
+		var canvasFog1 = $("#fogCanvas1")[0];
+		var contextFog1 = canvasFog1.getContext("2d");
+		
+		var fogPart = new Image();
+		fogPart.src = "img/fogHexes.png";
+		fogPart.addEventListener('load', function() {
+			buildFog (contextFog1, fogPart, fogPlayer1);
+			}, false);
+		
+		// P2 Fog
+		var canvasFog2 = $("#fogCanvas2")[0];
+		var contextFog2 = canvasFog2.getContext("2d");
+	
+		var fogPart = new Image();
+		fogPart.src = "img/fogHexes.png";
+		fogPart.addEventListener('load', function() {
+			buildFog (contextFog2, fogPart, fogPlayer2);
+			}, false);
+}
+
+function fogOfWar () {
+	
+	// update fog hexes
+	for (fogInHex=0; fogInHex<=totHex-1; fogInHex++) {
+	
+		var oneFogClear = hexData[fogInHex][3];
+		var twoFogClear = hexData[fogInHex][4];
+		var oneFogHalf = hexData[fogInHex][5];
+		
+		//alert ("fog function: " + fogInHex + " and army: " + oneFogClear);
+		
+		if (oneFogClear>0) {
+			
+			fogPlayer1[fogInHex] = 160; // place clear hex (no fog)
+			
+			//alert ("adj fog detected: hex " + fogInHex + " is being updated to " + fogPlayer1[fogInHex]);
+			
+			//for (whichHalf=0, whichHalf<oneFogHalf.length, whichHalf++) {
+				//drawHalfFog = oneFogHalf[whichHalf];
+				//fogPlayer1[drawHalfFog] = 80;
+			//}
+			
+		//}else{
+			//fogPlayer1[fogInHex] = 0;   // place hidden hex (full fog)
+		}
+		
+		if (twoFogClear>0) {
+			
+			fogPlayer2[fogInHex] = 160; // place clear hex (no fog)
+		}
+
+	}
+	
+	// draw P1 Fog
+
+	var canvasFog1 = $("#fogCanvas1")[0];
+	var contextFog1 = canvasFog1.getContext("2d");
+	
+	var fogPart = new Image();
+	fogPart.src = "img/fogHexes.png";
+	fogPart.addEventListener('load', function() {
+		buildFog (contextFog1, fogPart, fogPlayer1);
+		}, false);
+		
+	// draw P2 Fog
+
+	var canvasFog2 = $("#fogCanvas2")[0];
+	var contextFog2 = canvasFog2.getContext("2d");
+
+	var fogPart = new Image();
+	fogPart.src = "img/fogHexes.png";
+	fogPart.addEventListener('load', function() {
+		buildFog (contextFog2, fogPart, fogPlayer2);
+		}, false);
+}
+
+function buildFog (fogContext, fogPart, fogPlayer) {
+	
+	// need to clear old fog layer
+	fogContext.clearRect(0, 0, 500, 500);
+	
+	for (fogInHex=0; fogInHex<=totHex-1; fogInHex++) {
+
+	fogPosX = hexData[fogInHex][1];
+	fogPosY = hexData[fogInHex][2];
+
+	fogContext.drawImage (fogPart, fogPlayer[fogInHex], 0, 80, 90, fogPosX, fogPosY, 81, 91);
+	}
+}
+
+function nextTurn () {	
 	  	if(playerIndex>3)
 		{
 	    	playerIndex=3;
 	    	opponentIndex=4;
 	
+			// flip fog of war to red player
+			$('#fogCanvas1').show();
+			$('#fogCanvas2').hide();
+			
 			// update player message
-			$('#infoBar').html('Player Turn:&nbsp<font style="color:silver; background:#6B0002">&nbspRED&nbsp</font>');			
+			showMsgSide ("<img src='img/gemRed.png' style='float:left; margin: 0 10px 0 0;'/><b>Player 1 Turn</b>");		
 
 	  	}else{
 
 	    	playerIndex=4;
 	    	opponentIndex=3;
-
+	
+			// flip fog of war to blue player
+			$('#fogCanvas1').hide();
+			$('#fogCanvas2').show();
+			
 			// update player message
-			$('#infoBar').html('Player Turn:&nbsp<font style="color:silver; background:#1f3d5b">&nbspBLUE&nbsp</font>');
+			showMsgSide ("<img src='img/gemBlue.png' style='float:left; margin: 0 10px 0 0;'/><b>Player 2 Turn</b>");
 			
 	  	}
 
@@ -300,10 +378,36 @@ function nextTurn ()
 	    	}
 	  	}
 	  	drawArmy();
-	}
+		fogOfWar();
+}
 
-function drawArmy()
-	{
+	
+function showMsgSide (theMsg) {
+		//alert (theMsg);
+		$('#leftPop').html (theMsg);
+		$('#leftPop').dialog ({
+			position: [14, 70],
+			height: 45,
+			width: 170,
+			dialogClass: "noDialogTitle",
+			resizable: false,
+			show: "slide",
+			showOpt: {direction:'left'}
+		});
+}
+
+function hideMsgSide () {
+	$('#leftPop').dialog ("destroy");
+}
+
+	
+function showMsgCenter (theMsg) {		
+}
+
+function drawArmy() {
+	
+	fogOfWar ();
+	
 	var canvasArmies = $("#armies")[0];
 	var contextArmies = canvasArmies.getContext("2d");
 	
@@ -336,8 +440,6 @@ function drawArmy()
 			contextArmies.closePath();
 			contextArmies.fill();
 			
-			//contextArmies.fillRect (hexData[armHex][1]+66, hexData[armHex][2]+79, 25, 25);
-			
           }else if (hexData[armHex][4]>0){
             troops=hexData[armHex][4];
             contextArmies.fillStyle = "#2B4FAA"; // blue circle
@@ -359,10 +461,9 @@ function drawArmy()
 		    contextArmies.fillStyle = "white";
           	contextArmies.fillText(troops, unitTagX, unitTagY);		
         }
-	}
+}
 
-function clearHighlights()
-	{
+function clearHighlights() {
 		var canvasHighlights = $("#highlights")[0];
 		var contextHighlights = canvasHighlights.getContext("2d");
 		contextHighlights.clearRect(0, 0, 800, 600);
@@ -373,10 +474,10 @@ function clearHighlights()
 	
 		drawArmy();
 		return true;
-	}
+}
 	
-function highlightHexs(tempX,tempY)
-	{
+function highlightHexs(tempX,tempY) {
+	
 		// every time mouse moves, remove the old highlight by clearing the highlight canvas
 		var canvasHighlights = $("#highlights")[0];
 		var contextHighlights = canvasHighlights.getContext("2d");
@@ -390,11 +491,10 @@ function highlightHexs(tempX,tempY)
 
 	  for (moveHex=0; moveHex<=totHex-1; moveHex++)
 	  {	  
-
 		  if (inHex (tempX,tempY,hexData[moveHex][6],hexData[moveHex][7],hexRadius))
 		  {  
 		    // update the infobox
-		    // showHexStats (moveHex);
+		    showHexStats (moveHex);
 
 			if(moveHex!=hexSelected && moveFromHex==-1){
 			    potentialHexes=[];
@@ -403,7 +503,6 @@ function highlightHexs(tempX,tempY)
 				potentialHexes=[];
 			}
 			hexSelected=moveHex;
-
 
 			//Identify valid opponent hexes
 			// Only change the highlighted adjacent hexes if there is not a move in progress
@@ -421,10 +520,9 @@ function highlightHexs(tempX,tempY)
 			}}}}
 			
 	  		applyHighlights();
-	}
+}
 	
-function applyHighlights()
-	{
+function applyHighlights() {
 		var canvasHighlights = $("#highlights")[0];
 		var contextHighlights = canvasHighlights.getContext("2d");
 		contextHighlights.clearRect(0, 0, 800, 600);
@@ -445,22 +543,80 @@ function applyHighlights()
 		}
 
 		var newMoveFromHexOutline = new Image();
-	    newMoveFromHexOutline.src = "img/hexlight_b.png";
+	    newMoveFromHexOutline.src = "img/hexlight_halo.png";
 	    if(moveFromHex>-1){
 			contextHighlights.drawImage(newMoveFromHexOutline, 0, 0, 80, 90,
 				hexData[moveFromHex][1], hexData[moveFromHex][2], 80, 90);
 		}
 
 		var newMoveToHexOutline = new Image();
-		newMoveToHexOutline.src = "hexlight_b.png";
+		newMoveToHexOutline.src = "hexlight_halo.png";
 		if(moveToHex>-1){
 			contextHighlights.drawImage(newMoveToHexOutline, 0, 0, 80, 90,
 				hexData[moveToHex][1], hexData[moveToHex][2], 80, 90);
 		}
-	}
+}
 
-function attemptMove(e)
-	{	
+function showHexStats (hexStat) {
+	
+	// target the stat layer: for hex thumbnail
+	var canvasStatHex = $("#infoLayer")[0];
+	var contextStatHex = canvasStatHex.getContext("2d");
+	
+	// target the stat layer: for hex info
+	var canvasStatText = $("#textLayer")[0];
+	var contextStatText = canvasStatText.getContext("2d");
+	
+	var newHexPart = new Image();
+	newHexPart.src = "img/hexTray5.png";
+	
+	// Clear out previous stat layers
+
+	contextStatHex.clearRect(0, 0, 159, 100);
+	contextStatText.clearRect(0, 0, 159, 100);
+	
+	// check to see if hex is fogged
+	
+	
+	// draw a mini version of the hex type in the infobox, using the hex type saved when the map was generated
+	contextStatHex.drawImage(newHexPart, hexData[hexStat][0], 0, 80, 90, 20, 42, 27, 30);
+	
+	// write out the terrain value from the terrainData table
+	var terrainIndex = hexData[hexStat][0]/80;
+	
+	// Terrain Name
+    contextStatText.font = "20px Arial";
+    contextStatText.fillStyle = "white";
+    contextStatText.textBaseline = "top";
+	contextStatText.fillText(terrainData[terrainIndex][0], 20, 15);
+		
+	// Movement points, Defense and Attack Bonuses
+    contextStatText.font = "italic 12px Georgia";
+    contextStatText.fillStyle = "#727272";
+    contextStatText.textBaseline = "top";
+
+	// determine whether modifier is positive or negative
+	var defPos = terrainData[terrainIndex][3];
+	var attPos = terrainData[terrainIndex][2];
+	
+	if (defPos>=0) {
+		var defVal = "+"
+	}else{
+		var defVal = "-"
+	}
+	
+	if (attPos>=0) {
+		var attVal = "+"
+	}else{
+		var attVal = "-"
+	}
+	
+	contextStatText.fillText(attVal + terrainData[terrainIndex][3] + " Attack", 60, 42);
+	contextStatText.fillText(defVal + terrainData[terrainIndex][2] + " Defense", 60, 57);
+
+}
+
+function attemptMove(e) {	
 		// Have I click on the selected hex again? if so deselect
 		if(moveFromHex==hexSelected){
 		  moveFromHex=-1;
@@ -474,16 +630,9 @@ function attemptMove(e)
 		}
 		resolveCombat();
 		// If I have already selected a hex is this a valid adjacent hex?
-	}
+}
 	
-function forOfWar () 
-	{
-		
-	}
-
-	
-function resolveCombat()
-	{
+function resolveCombat() {
 		hexData[moveToHex][playerIndex]=(hexData[moveFromHex][playerIndex]-1)-hexData[moveToHex][opponentIndex]+hexData[moveToHex][playerIndex];
 		hexData[moveFromHex][playerIndex]=1;
 		hexData[moveToHex][opponentIndex]=0;
@@ -493,10 +642,9 @@ function resolveCombat()
 		hexSelected=-1;
 		potentialHexes=[];
 		czechForVictory();
-	}
+}
 	
-function czechForVictory()
-	{
+function czechForVictory() {
 		var opponentTroops=0;
 		for (i=0;i<hexData.length;i++ )
 		{
@@ -505,4 +653,4 @@ function czechForVictory()
 		if(opponentTroops==0){
 			alert("You Win!");
 		}
-	}
+}

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>currentDocument</key>
+	<string>../Hex-Game-Project/js/maindev.js</string>
+	<key>documents</key>
+	<array>
+		<dict>
+			<key>filename</key>
+			<string>../Hex-Game-Project/hexgame.html</string>
+			<key>lastUsed</key>
+			<date>2011-08-27T14:27:40Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>../../../Dropbox/Projects - Current/Game Project (old)/map/Map Test   Order 3 Hexes.html</string>
+			<key>lastUsed</key>
+			<date>2011-08-27T13:38:54Z</date>
+		</dict>
+		<dict>
+			<key>expanded</key>
+			<true/>
+			<key>name</key>
+			<string>Hex-Game-Project</string>
+			<key>regexFolderFilter</key>
+			<string>!.*/(\.[^/]*|CVS|_darcs|_MTN|\{arch\}|blib|.*~\.nib|.*\.(framework|app|pbproj|pbxproj|xcode(proj)?|bundle))$</string>
+			<key>sourceDirectory</key>
+			<string>../Hex-Game-Project</string>
+		</dict>
+	</array>
+	<key>fileHierarchyDrawerWidth</key>
+	<integer>254</integer>
+	<key>metaData</key>
+	<dict>
+		<key>../../../Dropbox/Projects - Current/Game Project (old)/map/Map Test   Order 3 Hexes.html</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>../Hex-Game-Project/css/hex.css</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>../Hex-Game-Project/hexgame.html</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>../Hex-Game-Project/js/maindev.js</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>1</integer>
+				<key>line</key>
+				<integer>242</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>205</integer>
+		</dict>
+	</dict>
+	<key>openDocuments</key>
+	<array>
+		<string>../Hex-Game-Project/hexgame.html</string>
+		<string>../Hex-Game-Project/js/maindev.js</string>
+		<string>../Hex-Game-Project/css/hex.css</string>
+		<string>../../../Dropbox/Projects - Current/Game Project (old)/map/Map Test   Order 3 Hexes.html</string>
+	</array>
+	<key>showFileHierarchyDrawer</key>
+	<true/>
+	<key>windowFrame</key>
+	<string>{{386, 312}, {1421, 1180}}</string>
+</dict>
+</plist>

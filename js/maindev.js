@@ -1,5 +1,5 @@
 // ..........
-// SIXWAR Main Javascript
+// SIXWAR Main Javascript - TEST SCRIPT
 // ..........
 
 
@@ -22,7 +22,7 @@ function mainLoop () {
 		tempX = e.pageX;
 		tempY = e.pageY;
 		
-		// apply mouse pointer to offset from actual canvas position
+		// apply mouse pointer offset from actual canvas position
 		tempX = tempX - 155;
 	  	tempY = tempY - 80;
 	
@@ -40,13 +40,14 @@ function mainLoop () {
 	// END TURN BUTTON
 	
 	$('#infoContent').append (
-		"<button id='endTurnButton' style='position:absolute; left: 50px; top: 80px;'>End Turn</button>"
+		"<button id='endTurnButton' style='position:absolute; left: 53px; top: 122px;'>End Turn</button>"
 	);
 	
 	$('#endTurnButton').button();
 	$('#endTurnButton').click(function()
 		{
-		nextTurn();	
+		nextTurn();
+		fogOfWar();
 		}
 	);
 
@@ -63,6 +64,7 @@ function checkCanvas ()
 		}else{
 		// canvas features are present so start up the app
 		greeting ();
+		initFog();
 		}
 	}
 
@@ -85,6 +87,10 @@ function greeting ()
 		buttons: { "Start Playing": function() { 
 			$(this).dialog("close");
 			gameBoardSetup ();
+			
+			// Show initial player's turn message
+			$('#infoBar').html('Player Turn:&nbsp<font style="color:silver; background:#6B0002">&nbspRED&nbsp</font>');
+			
 			}},
 	});
 	}
@@ -126,16 +132,16 @@ var hexRadius = 26;
 var totHex = 19; // order 3 has 19 hexes
 
 hexData = [
-   		[null, canvX+75, canvY-129, 0,3,[1,3,4],255,120] // 				hex 1
+   		[null, canvX+75, canvY-129, 0,3,[1,3,4],255,120] // 			hex 1
    	,	[null, canvX+155, canvY-129, 0,0,[0,2,4,5],335,120] // 			hex 2
-   	,	[null, canvX+235, canvY-129, 0,0,[1,5,6],415,120] // 				hex 3
+   	,	[null, canvX+235, canvY-129, 0,0,[1,5,6],415,120] // 			hex 3
    	
    	,	[null, canvX+35, canvY-61, 0,0,[0,4,7,8],215,190] // 			hex 4
    	,	[null, canvX+115, canvY-61, 0,0,[0,1,3,5,8,9],295,190] // 		hex 5
    	,	[null, canvX+195, canvY-61, 0,0,[1,2,4,6,9,10],375,190] // 		hex 6
-   	,	[null, canvX+275, canvY-61, 0,0,[2,5,10,11],455,190] // 			hex 7
+   	,	[null, canvX+275, canvY-61, 0,0,[2,5,10,11],455,190] // 		hex 7
    	
-   	,	[null, canvX-5, canvY+7, 0,0,[3,8,12],175,260] // 			hex 8	
+   	,	[null, canvX-5, canvY+7, 0,0,[3,8,12],175,260] // 				hex 8	
    	,	[null, canvX+75, canvY+7, 0,0,[3,4,7,9,12,13],255,260] // 		hex 9
    	,	[null, canvX+155, canvY+7, 0,0,[4,5,8,10,13,14],335,260] // 	hex 10
    	,	[null, canvX+235, canvY+7, 0,0,[5,6,9,11,14,15],415,260] // 	hex 11
@@ -148,7 +154,7 @@ hexData = [
    	
    	,	[null, canvX+75, canvY+143, 0,0,[12,13,17],255,390] // 			hex 17
    	,	[null, canvX+155, canvY+143, 0,0,[13,14,16,18],335,390] // 		hex 18
-   	,	[null, canvX+235, canvY+143, 3,0,[14,15,17],415,390] // 			hex 19
+   	,	[null, canvX+235, canvY+143, 3,0,[14,15,17],415,390] // 		hex 19
    	];
 
 	
@@ -167,7 +173,65 @@ terrainData = [
 	,	["Mountains", 4, 5, 3] //		Mountain Hex 2
 	,	["Desert", 2, 1, 0] //			Desert Hex	
 	];
+
+// Shared fog of war position data
+// format = [X position, Y position, adjHex data]
+
+fogGenData = [
+   		[canvX+75, canvY-129, [1,3,4] ] // 			hex 1
+   	,	[canvX+155, canvY-129, [0,2,4,5] ] // 		hex 2
+   	,	[canvX+235, canvY-129, [1,5,6] ] // 		hex 3
+   	
+   	,	[canvX+35, canvY-61, [0,4,7,8] ] // 		hex 4
+   	,	[canvX+115, canvY-61, [0,1,3,5,8,9] ] // 	hex 5
+   	,	[canvX+195, canvY-61, [1,2,4,6,9,10] ] // 	hex 6
+   	,	[canvX+275, canvY-61, [2,5,10,11] ] // 		hex 7
+   	
+   	,	[canvX-5, canvY+7, [3,8,12] ] // 			hex 8	
+   	,	[canvX+75, canvY+7, [3,4,7,9,12,13] ] // 	hex 9
+   	,	[canvX+155, canvY+7, [4,5,8,10,13,14] ] // 	hex 10
+   	,	[canvX+235, canvY+7, [5,6,9,11,14,15] ] // 	hex 11
+   	,	[canvX+315, canvY+7, [6,10,15] ] // 		hex 12
+   		
+   	,	[canvX+35, canvY+75, [7,8,13,16] ] // 		hex 13
+   	,	[canvX+115, canvY+75, [8,9,12,14,16,17] ] //hex 14
+   	,	[canvX+195, canvY+75, [9,10,13,15,17,18] ]//hex 15
+   	,	[canvX+275, canvY+75, [10,11,14,18] ] // 	hex 16
+   	
+   	,	[canvX+75, canvY+143, [12,13,17] ] // 		hex 17
+   	,	[canvX+155, canvY+143, [13,14,16,18] ] // 	hex 18
+   	,	[canvX+235, canvY+143, [14,15,17] ] // 		hex 19
+   	];
+
+// Init fog of war arrays with all hexes as hidden
+
+function initFog ()
+	{
+	fogPlayer1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+	fogPlayer2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 	
+	// set the fog layers to hidden (only show on specific player turn)
+	$('#fogCanvas1').show(); // red player starts game
+	$('#fogCanvas2').hide();
+	
+	// draw the starting fog states
+	
+		// P1 Fog
+		var canvasFog1 = $("#fogCanvas1")[0];
+		var contextFog1 = canvasFog1.getContext("2d");
+	
+		contextFog1.fillStyle = "red";
+		contextFog1.fillRect (canvX-30, canvY-30, 20, 20);
+		
+		// P2 Fog
+		var canvasFog1 = $("#fogCanvas2")[0];
+		var contextFog1 = canvasFog1.getContext("2d");
+	
+		contextFog1.fillStyle = "blue";
+		contextFog1.fillRect (canvX-30, canvY-70, 20, 20);
+	}
+
+
 function gameBoardSetup ()
 	{
 	// ------- 1. create map
@@ -213,17 +277,24 @@ function buildMap (contextMap, newHexPart)
 	}
 	}
 
-function nextTurn () {
-
+function nextTurn ()
+	{	
 	  	if(playerIndex>3)
 		{
 	    	playerIndex=3;
 	    	opponentIndex=4;
+	
+			// update player message
+			$('#infoBar').html('Player Turn:&nbsp<font style="color:silver; background:#6B0002">&nbspRED&nbsp</font>');			
 
 	  	}else{
 
 	    	playerIndex=4;
 	    	opponentIndex=3;
+
+			// update player message
+			$('#infoBar').html('Player Turn:&nbsp<font style="color:silver; background:#1f3d5b">&nbspBLUE&nbsp</font>');
+			
 	  	}
 
 		// Adds +1 army to each occupied hex
@@ -235,13 +306,17 @@ function nextTurn () {
 	    	}
 	  	}
 	  	drawArmy();
+		fogOfWar();
+	}
+	
+
+function fogOfWar () 
+	{
+		
 	}
 
 function drawArmy()
 	{
-		
-		// Update 'Player Turn' message
-		//$("#infoBar").append ("Test");
 	var canvasArmies = $("#armies")[0];
 	var contextArmies = canvasArmies.getContext("2d");
 	
@@ -255,7 +330,7 @@ function drawArmy()
 		
         for (armHex=0; armHex<=totHex-1; armHex++)
 		{
-			// change these two values to move the unit labels as a group
+			// change these two values to move the hex labels as a group
 			var unitTagOffsetX = 59;
 			var unitTagOffsetY = 49;
 			

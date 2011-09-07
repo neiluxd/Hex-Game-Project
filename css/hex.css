@@ -2,7 +2,7 @@ body {
 	margin-left: 0px;
 	margin-top: 0px;
 	background-color: #344253;
-	font: small "Lucida Grande", Lucida, Verdana, sans-serif;
+	font: medium, "Lucida Grande", Lucida, Verdana, sans-serif;
 }
 
 #logo {
@@ -13,60 +13,36 @@ body {
 	z-index: 8;
 	top: 0px;
 	left: 10px;
-	background-image:url(../img/sixwar_logo.png)
+	background-image:url(../img/sixwar_logo.png);
 }
 
 #infoBar {
 	margin: 0 auto;
 	width: 156px;
-	height: 180px;
+	height: 98px;
 	position: absolute;
 	z-index: 8;
-	top: 75px;
+	top: 133px;
 	left: 14px;
-	background-color:#292929;
+	background-color:#131614;
 	padding: 25px 0px 0px 23px;
 	color: #686868;
-	font: 15px "Lucida Grande", Lucida, Verdana, sans-serif;
+	font: "Lucida Grande", Lucida, Verdana, sans-serif;
 }
 
 #infoContent {
 	margin: 0 auto;
 	width: 159px;
-	height: 95px;
+	height: 65px;
 	position: absolute;
 	z-index: 8;
 	top: 135px;
 	left: 14px;
 	background-color:#383838;
+	background-image: url(../img/infoContentBkg.png);
+	background-repeat: repeat-x;
 	padding: 10px;
 	color: white;
-}
-
-
-#statBar {
-	margin: 0 auto;
-	width: 159px;
-	height: 80px;
-	position: absolute;
-	z-index: 8;
-	top: 390px;
-	left: 14px;
-	background-color:#393939;
-	color: white;
-	padding: 35px 10px 10px;
-}
-
-#statCanvas {
-	margin: 0 auto;
-	width: 159px;
-	height: 80px;
-	position: absolute;
-	z-index: 9;
-	top: 390px;
-	left: 14px;
-	color: white;
-	padding: 35px 10px 10px;
 }
 
 #mapWindow {
@@ -92,7 +68,7 @@ body {
 #pageCredits{
 	margin: 0 auto;
 	position: absolute;
-	top: 700px;
+	top: 670px;
 	left: 14px;
 	font-size: 12px;
 	color: #999;
@@ -101,4 +77,6 @@ body {
 }
 
 .noDialogClose .ui-dialog-titlebar-close {display:none}
+
+.noDialogTitle .ui-dialog-titlebar {display:none}
 

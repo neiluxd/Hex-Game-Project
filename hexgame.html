@@ -33,42 +33,30 @@
 	<div id="logo"></div>
 
 	<div id="infoBar"></div>
+	
+	<!-- Left-side Popup -->
+	<div id="leftPop"></div>
+	
+	<!-- Left-side Info Area -->
+	<canvas id="textLayer" width="159" height="75" style="z-index: 15; position:absolute; left:14px; top:135px;"></canvas>
+	<canvas id="infoLayer" width="159" height="75" style="z-index: 16; position:absolute; left:14px; top:135px;"></canvas>	
 	<div id="infoContent"></div>
 
-	<!-- Hex Info - insert separate stat canvas here-->
-	<canvas id="statCanvas"></canvas>   
-	<div id="statBar"></div>
-
-	<!-- Placeholder for Status Pop-up -->
+	<!-- Center Status Pop-up -->
 	<div id="alertArea"></div>
 
-	<!-- Main Canvases for Game Area-->
+	<!-- Main Canvases for Game Area -->
 	
 	<canvas id="testCanvasEdges" width="500" height="500" style="z-index: 1; position:absolute; left:205px; top:60px; background-color: #ccc; opacity: 0">
 	</canvas>
 	
 	<canvas id="canvas" width="500" height="500" style="z-index: 2; position:absolute; left:205px; top:60px;">
-	Sixwar uses the HTML Canvas element, which is not available in some older browsers. Please upgrade your browser to try it out.
-	</canvas>
-
-    <canvas id="highlights" width="500" height="500"  style="z-index: 3; position:absolute; left:205px; top:60px;"> 
-	</canvas>
+	Sixwar uses the HTML Canvas element, which is not available in some older browsers. Please upgrade your browser to try it out.</canvas>
 	
-    <canvas id="fogCanvas1" width="500" height="500"  style="z-index: 4; position:absolute; left:205px; top:60px;"> 
-	</canvas>
-	
-    <canvas id="fogCanvas2" width="500" height="500"  style="z-index: 5; position:absolute; left:205px; top:60px;"> 
-	</canvas>		
-		
-	<canvas id="armies" width="500" height="500"  style="z-index: 10; position:absolute; left:205px; top:60px;">
-    </canvas>
-
-    <canvas id="infolayer" width="500" height="500"  style="z-index: 15; position:absolute; left:205px; top:60px;"> 
-	</canvas>
-
-    <canvas id="textlayer" width="500" height="500"  style="z-index: 16; position:absolute; left:205px; top:60px;"> 
-	</canvas>
-	
+    <canvas id="highlights" width="500" height="500"  style="z-index: 3; position:absolute; left:205px; top:60px;"></canvas>	
+    <canvas id="fogCanvas1" width="500" height="500"  style="z-index: 20; position:absolute; left:205px; top:60px;"></canvas>	
+    <canvas id="fogCanvas2" width="500" height="500"  style="z-index: 21; position:absolute; left:205px; top:60px;"></canvas>				
+	<canvas id="armies" width="500" height="500"  style="z-index: 10; position:absolute; left:205px; top:60px;"></canvas>	
 	<canvas id="clickcanvas" width="500" height="500"  style="z-index: 25; position:absolute; left:205px; top:60px;"> 
 	<!-- This canvas must be the topmost canvas since it is used for click detection -->
 	</canvas>
