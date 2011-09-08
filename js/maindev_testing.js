@@ -585,7 +585,7 @@ function showHexStats (hexStat) {
 	var terrainIndex = hexData[hexStat][0]/80;
 	
 	// Terrain Name
-    contextStatText.font = "20px Arial";
+    contextStatText.font = "italic 20px Georgia";
     contextStatText.fillStyle = "white";
     contextStatText.textBaseline = "top";
 	contextStatText.fillText(terrainData[terrainIndex][0], 20, 15);
