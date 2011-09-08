@@ -84,6 +84,17 @@ function greeting () {
 			
 			// send first player turn msg to sidebar
 			showMsgSide ("<img src='img/gemRed.png' style='float:left; margin: 0 10px 0 0;'/><b>Player 1 Turn</b>");
+			
+			// place intro message in sidebar
+			var canvasStatText = $("#textLayer")[0];
+			var contextStatText = canvasStatText.getContext("2d");
+			
+			contextStatText.font = "italic 14px Georgia";
+		    contextStatText.fillStyle = "gray";
+		    contextStatText.textBaseline = "top";
+			contextStatText.fillText("Tap on a hex to move", 20, 30);
+			contextStatText.fillText("your units", 20, 48);
+			
 			}},
 	});
 }
@@ -279,7 +290,10 @@ function fogOfWar () {
 	
 		var oneFogClear = hexData[fogInHex][3];
 		var twoFogClear = hexData[fogInHex][4];
-		var oneFogHalf = hexData[fogInHex][5];
+		var adjFogHalf = hexData[fogInHex][5];
+		
+		var checkHalfFog1 = fogPlayer1[fogInHex];
+		var checkHalfFog2 = fogPlayer2[fogInHex];
 		
 		//alert ("fog function: " + fogInHex + " and army: " + oneFogClear);
 		
@@ -287,13 +301,15 @@ function fogOfWar () {
 			
 			fogPlayer1[fogInHex] = 160; // place clear hex (no fog)
 			
-			//alert ("adj fog detected: hex " + fogInHex + " is being updated to " + fogPlayer1[fogInHex]);
-			
-			//for (whichHalf=0, whichHalf<oneFogHalf.length, whichHalf++) {
-				//drawHalfFog = oneFogHalf[whichHalf];
-				//fogPlayer1[drawHalfFog] = 80;
-			//}
-			
+			for (whichHalf1=0; whichHalf1<adjFogHalf.length; whichHalf1++) {
+				
+				var drawHalfFog1 = adjFogHalf[whichHalf1];
+				
+				if (drawHalfFog1!=fogInHex && checkHalfFog1==0) {
+					fogPlayer1[drawHalfFog1] = 80; // place partial fog
+				}
+			}
+				
 		//}else{
 			//fogPlayer1[fogInHex] = 0;   // place hidden hex (full fog)
 		}
@@ -301,8 +317,17 @@ function fogOfWar () {
 		if (twoFogClear>0) {
 			
 			fogPlayer2[fogInHex] = 160; // place clear hex (no fog)
+			
+			for (whichHalf2=0; whichHalf2<adjFogHalf.length; whichHalf2++) {
+				
+				var drawHalfFog2 = adjFogHalf[whichHalf2];
+				
+				if (drawHalfFog2!=fogInHex && checkHalfFog2==0) {
+					fogPlayer2[drawHalfFog2] = 80; // place partial fog
+				}
+			}
 		}
-
+		fogPlayer2[0] = 160; // kludge, need to find this bug (initial hex for p2 is fogging unintentionally)
 	}
 	
 	// draw P1 Fog
